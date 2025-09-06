@@ -1,0 +1,45 @@
+Generate a full-stack, real-time video and voice meeting application. This app will establish a two-person video call using WebRTC and include the foundation for live transcription and AI summarization.
+
+**Technology Stack:**
+- **Backend:** Node.js with Express and Socket.IO for WebRTC signaling.
+- **Frontend:** HTML, CSS, and vanilla JavaScript.
+- **AI Integration:** Placeholders for a real-time transcription service (like Deepgram) and a summarization AI (like OpenAI).
+
+**File Structure:**
+- Create `index.js`, `package.json`, and a `public` directory with `index.html`, `style.css`, and `script.js`.
+- `package.json` should list dependencies for `express` and `socket.io`.
+
+**1. Backend Signaling Server (`index.js`):**
+-   Initialize an Express server and integrate `Socket.IO`. This server's primary role is to be a WebRTC signaling server.
+-   Serve the `public` directory.
+-   **Signaling Logic:** Implement the necessary Socket.IO event listeners to pass WebRTC signaling messages between two clients. This must include listeners for:
+    -   `join-room`: To let a user join a specific meeting room.
+    -   `offer`: To pass the SDP offer from the caller to the callee.
+    -   `answer`: To pass the SDP answer from the callee back to the caller.
+    -   `ice-candidate`: To pass ICE candidates between peers to establish the connection.
+-   **AI API Endpoint:**
+    -   Create a placeholder `POST /api/summarize` endpoint that accepts text (the meeting transcript) and returns a mock summary. Include comments and setup for the OpenAI API, similar to previous instructions.
+
+**2. Frontend UI (`index.html` & `style.css`):**
+-   **Main Layout:** The page should have a title like "SynergySphere Meeting".
+-   **Video Elements:** Include two large `<video>` elements. One, `#localVideo`, will be for the user's own camera feed. The other, `#remoteVideo`, is for the connected peer.
+-   **Controls:** Provide buttons with IDs: `#startCall`, `#hangUp`.
+-   **AI Features UI:**
+    -   Create a `<div>` with the ID `#transcriptionBox` to display live meeting transcripts.
+    -   Add a button with the ID `#getSummary` to trigger the post-call summary.
+-   **Styling:** Give the page a modern, professional look with "cool gradient colours" for the background and button elements. Ensure the video elements are the main focus.
+
+**3. Frontend WebRTC Client (`script.js`):**
+-   Initialize a Socket.IO client connection.
+-   **Core WebRTC Logic:**
+    -   On page load, use `navigator.mediaDevices.getUserMedia` to get access to the user's camera and microphone and display it in the `#localVideo` element.
+    -   Create a global `RTCPeerConnection` variable.
+    -   Implement the logic for the `#startCall` button to initiate the connection by creating an offer (`createOffer`), setting the local description, and sending the offer to the server via Socket.IO.
+    -   Implement the Socket.IO listeners to handle incoming `offer`, `answer`, and `ice-candidate` messages from the signaling server. This includes setting the remote description and adding received ICE candidates.
+    -   Implement the `onicecandidate` event handler to send generated candidates to the other peer via the server.
+    -   Implement the `ontrack` event handler to receive the remote peer's video/audio stream and attach it to the `#remoteVideo` element.
+-   **AI Feature Logic:**
+    -   Include a placeholder comment `// TODO: Integrate real-time transcription service here` to show where audio would be streamed for live notes.
+    -   Add an event listener to the `#getSummary` button. It should collect text from `#transcriptionBox` and `POST` it to `/api/summarize`, then `alert()` the result.
+
+Generate all the code for this functional WebRTC video application.
